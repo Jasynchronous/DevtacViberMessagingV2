@@ -4,18 +4,18 @@
 // Re-exports shared constants and adds Desk-specific entity/field names.
 // Desk custom modules/fields are created via API (no namespace prefix, unlike
 // CRM's devtacmessaging__ convention) — these names are confirmed against the
-// live cm_devtac_sms_logs module via the Desk API Explorer.
+// live cm_devtac_viber_logs module via the Desk API Explorer.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export { CONFIG, FUNCTIONS } from "../../shared/js/config.js";
 
 // ── Desk-native module names ───────────────────────────────────────────────────
 export const DESK_ENTITY = {
-    LOGS: "cm_devtac_sms_logs",
-    TEMPLATES: "cm_devtac_sms_templates",
+    LOGS: "cm_devtac_viber_logs",
+    TEMPLATES: "cm_devtac_viber_templates",
 };
 
-// ── Desk-native field API names (cm_devtac_sms_logs) ──────────────────────────
+// ── Desk-native field API names (cm_devtac_viber_logs) ────────────────────────
 export const LOG_FIELDS = {
     DIRECTION: "cf_direction",         // Picklist: Inbound / Outbound
     MESSAGE_CONTENT: "cf_message_content",   // Multi-Line
@@ -33,9 +33,9 @@ export const LOG_FIELDS = {
     REQUEST_ID: "cf_request_id",        // Single Line
 };
 
-// ── Desk-native field API names (cm_devtac_sms_templates) ─────────────────────
+// ── Desk-native field API names (cm_devtac_viber_templates) ───────────────────
 export const TEMPLATE_FIELDS = {
-    NAME: "name",              // Single Line (Devtac SMS Template Name)
+    NAME: "name",              // Single Line (Devtac Viber Template Name)
     MESSAGE_CONTENT: "cf_message_content", // Multi-Line
-    MODULE: "cf_module",          // Pick List (Devtac SMS Template Module scope)
+    MODULE: "cf_module",          // Pick List (Devtac Viber Template Module scope)
 };

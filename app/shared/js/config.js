@@ -4,11 +4,12 @@
 // Single source of truth for constants shared across all Desk widget pages
 // (chat, notification, etc.).
 //
-// When duplicating this widget for Viber or WhatsApp, only edit this file.
+// When duplicating this widget for another channel (e.g. WhatsApp), only edit
+// this file.
 //
 // CHANNEL VALUES:
+//   Viber    → namespace: devtacvibermessaging   (current)
 //   SMS      → namespace: devtacsmsmessaging
-//   Viber    → namespace: devtacvibermessaging   (future)
 //   WhatsApp → namespace: devtacwhatsappmessaging (future)
 // ─────────────────────────────────────────────────────────────────────────────
 

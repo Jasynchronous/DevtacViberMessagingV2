@@ -406,7 +406,7 @@ function selectTemplate(t) {
             }
         })
         .catch((err) => {
-            console.error("[Devtac SMS] resolveTemplatePlaceholders() failed for template", t.id, err);
+            console.error("[Devtac Viber] resolveTemplatePlaceholders() failed for template", t.id, err);
             // Fall back to the quick preview rather than leaving the
             // textarea blank. Deliberately NOT cached — a failed resolution
             // (e.g. transient network issue) shouldn't permanently stick the
@@ -440,7 +440,7 @@ async function resolveTemplatePlaceholders(body) {
     if (!body || !body.includes("${")) return body;
 
     if (!sigmaExecutionDomain || !orgId) {
-        console.warn("[Devtac SMS] resolveTemplatePlaceholders() missing sigmaExecutionDomain/orgId — returning template body unresolved.");
+        console.warn("[Devtac Viber] resolveTemplatePlaceholders() missing sigmaExecutionDomain/orgId — returning template body unresolved.");
         return body;
     }
 
@@ -470,12 +470,12 @@ async function resolveTemplatePlaceholders(body) {
         postBody: { payload: resolverPayload },
     };
 
-    console.log("[Devtac SMS] resolveTemplatePlaceholders() requestObj:", JSON.stringify(requestObj, null, 2));
+    console.log("[Devtac Viber] resolveTemplatePlaceholders() requestObj:", JSON.stringify(requestObj, null, 2));
 
     const res = await ZOHODESK.request(requestObj);
     const { value: raw } = await waitForResponseWrite(res, 10000);
 
-    console.log("[Devtac SMS] resolveTemplatePlaceholders() raw response:", raw);
+    console.log("[Devtac Viber] resolveTemplatePlaceholders() raw response:", raw);
 
     try {
         let parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
@@ -504,10 +504,10 @@ async function resolveTemplatePlaceholders(body) {
         if (typeof parsed === "string" && parsed.trim() !== "") {
             return parsed;
         }
-        console.warn("[Devtac SMS] resolveTemplatePlaceholders() unexpected response shape, falling back to unresolved body:", raw);
+        console.warn("[Devtac Viber] resolveTemplatePlaceholders() unexpected response shape, falling back to unresolved body:", raw);
         return body;
     } catch (parseErr) {
-        console.warn("[Devtac SMS] resolveTemplatePlaceholders() couldn't parse response, falling back to unresolved body.", parseErr, raw);
+        console.warn("[Devtac Viber] resolveTemplatePlaceholders() couldn't parse response, falling back to unresolved body.", parseErr, raw);
         return body;
     }
 }
@@ -641,7 +641,7 @@ function renderRecipientBar(ticket) {
     // often missing from ZOHODESK.get("ticket"), which previously made us
     // fall back to the phone number (and show "0" as the avatar initial).
     const nameFromParts = [contact.firstName, contact.lastName].filter(Boolean).join(" ").trim();
-    const name = (ticket.contactName || nameFromParts || contact.name || "").trim() || "SMS Conversation";
+    const name = (ticket.contactName || nameFromParts || contact.name || "").trim() || "Viber Conversation";
     const phone = ticket.phone || contact.phone || contact.mobile || "—";
 
     recipientName.textContent = name;
@@ -760,7 +760,7 @@ function renderMessages(logs, opts = {}) {
 
     if (!logs.length) {
         messagesArea.innerHTML = "";
-        emptyText.innerHTML = "No SMS messages for this ticket yet.<br>Select a template or type a message to start the conversation.";
+        emptyText.innerHTML = "No Viber messages for this ticket yet.<br>Select a template or type a message to start the conversation.";
         messagesArea.appendChild(emptyState);
         emptyState.style.display = "flex";
         return;
@@ -833,7 +833,7 @@ function waitForResponseWrite(obj, timeoutMs) {
             try {
                 targetObj = JSON.parse(obj);
             } catch (e) {
-                console.warn("[Devtac SMS] obj is a string but not valid JSON:", e);
+                console.warn("[Devtac Viber] obj is a string but not valid JSON:", e);
             }
         }
 
@@ -880,7 +880,7 @@ function waitForResponseWrite(obj, timeoutMs) {
             // Object isn't configurable (sealed/frozen by the SDK) — can't
             // watch writes on it. Fall back to a fixed short wait then a
             // single re-read.
-            console.warn("[Devtac SMS] can't watch targetObj.response for writes (object not configurable):", defineErr);
+            console.warn("[Devtac Viber] can't watch targetObj.response for writes (object not configurable):", defineErr);
             setTimeout(() => {
                 const finalVal = targetObj ? targetObj.response : undefined;
                 finish(finalVal, false);
@@ -913,21 +913,21 @@ async function searchLogsByField(fieldApiName, value) {
         try {
             res = await ZOHODESK.request(requestObj);
         } catch (reqErr) {
-            console.error(`[Devtac SMS] search(${fieldApiName}=${value}) ZOHODESK.request() THREW:`, reqErr, JSON.stringify(reqErr));
+            console.error(`[Devtac Viber] search(${fieldApiName}=${value}) ZOHODESK.request() THREW:`, reqErr, JSON.stringify(reqErr));
             break;
         }
 
         const { value: raw, viaWrite, elapsedMs } = await waitForResponseWrite(res, 10000);
 
         if (viaWrite) {
-            console.log(`[Devtac SMS] search(${fieldApiName}=${value}) response was WRITTEN to the object ${elapsedMs}ms after the request resolved.`);
+            console.log(`[Devtac Viber] search(${fieldApiName}=${value}) response was WRITTEN to the object ${elapsedMs}ms after the request resolved.`);
         } else if (raw !== undefined && raw !== null && raw !== "") {
-            console.log(`[Devtac SMS] search(${fieldApiName}=${value}) response was already present immediately (${elapsedMs}ms).`);
+            console.log(`[Devtac Viber] search(${fieldApiName}=${value}) response was already present immediately (${elapsedMs}ms).`);
         } else {
-            console.warn(`[Devtac SMS] search(${fieldApiName}=${value}) response was NEVER written within ${elapsedMs}ms.`);
+            console.warn(`[Devtac Viber] search(${fieldApiName}=${value}) response was NEVER written within ${elapsedMs}ms.`);
         }
 
-        console.log(`[Devtac SMS] search(${fieldApiName}=${value}) raw result:`, res, "| response (final):", raw);
+        console.log(`[Devtac Viber] search(${fieldApiName}=${value}) raw result:`, res, "| response (final):", raw);
 
         if (raw === "" || raw === undefined || raw === null) {
             break;
@@ -937,7 +937,7 @@ async function searchLogsByField(fieldApiName, value) {
         const payload = (body && body.statusMessage) || body;
 
         if (!payload || payload.data === undefined) {
-            console.warn(`[Devtac SMS] search(${fieldApiName}) unexpected response shape — likely an API error:`, body);
+            console.warn(`[Devtac Viber] search(${fieldApiName}) unexpected response shape — likely an API error:`, body);
             break;
         }
 
@@ -961,7 +961,7 @@ async function fetchLogsForTicket() {
 
     const logs = await searchLogsByField(LOG_FIELDS.RELATED_TICKET_ID, ticketId);
 
-    console.log(`[Devtac SMS] fetchLogsForTicket() ticketId="${ticketId}" -> ${logs.length} record(s)`, logs);
+    console.log(`[Devtac Viber] fetchLogsForTicket() ticketId="${ticketId}" -> ${logs.length} record(s)`, logs);
 
     const byId = new Map();
     for (const log of logs) {
@@ -997,7 +997,7 @@ async function fetchTicketLookupFields() {
     try {
         res = await ZOHODESK.request(requestObj);
     } catch (reqErr) {
-        console.error("[Devtac SMS] fetchTicketLookupFields() ZOHODESK.request() THREW:", reqErr, JSON.stringify(reqErr));
+        console.error("[Devtac Viber] fetchTicketLookupFields() ZOHODESK.request() THREW:", reqErr, JSON.stringify(reqErr));
         return [];
     }
 
@@ -1008,7 +1008,7 @@ async function fetchTicketLookupFields() {
     // DEBUG: confirm the raw shape of the fields metadata response — remove
     // once you've verified which keys actually identify lookup fields and
     // their target modules, and adjust the parsing below to match.
-    console.log("[Devtac SMS] fetchTicketLookupFields() raw response:", body);
+    console.log("[Devtac Viber] fetchTicketLookupFields() raw response:", body);
 
     // Confirmed live shape: { status: "true", statusMessage: { data: [...] } }
     // — the field list is nested under statusMessage.data, not a top-level
@@ -1040,19 +1040,19 @@ async function fetchTicketLookupFields() {
         const rawTarget = (lookupMeta.module && lookupMeta.module.apiName || "").toString().toLowerCase();
         const mappedModule = DESK_LOOKUP_MODULE_MAP[rawTarget];
         if (!mappedModule) {
-            console.warn(`[Devtac SMS] fetchTicketLookupFields() lookup field "${apiName}" has an unrecognized target "${rawTarget}" — add it to DESK_LOOKUP_MODULE_MAP if templates need to reference it.`, lookupMeta);
+            console.warn(`[Devtac Viber] fetchTicketLookupFields() lookup field "${apiName}" has an unrecognized target "${rawTarget}" — add it to DESK_LOOKUP_MODULE_MAP if templates need to reference it.`, lookupMeta);
             return;
         }
 
         lookups.push(`${apiName}|${mappedModule}`);
     });
 
-    console.log("[Devtac SMS] fetchTicketLookupFields() resolved lookups:", lookups);
+    console.log("[Devtac Viber] fetchTicketLookupFields() resolved lookups:", lookups);
     return lookups;
 }
 
 // ── Templates ─────────────────────────────────────────────────────────────────
-// Paginates through the Devtac SMS Templates custom module the same way
+// Paginates through the Devtac Viber Templates custom module the same way
 // searchLogsByField() paginates through logs, just against the plain list
 // endpoint instead of /search (there's no per-ticket field to filter by here).
 async function fetchAllTemplates() {
@@ -1083,7 +1083,7 @@ async function fetchAllTemplates() {
         try {
             res = await ZOHODESK.request(requestObj);
         } catch (reqErr) {
-            console.error("[Devtac SMS] fetchAllTemplates() ZOHODESK.request() THREW:", reqErr, JSON.stringify(reqErr));
+            console.error("[Devtac Viber] fetchAllTemplates() ZOHODESK.request() THREW:", reqErr, JSON.stringify(reqErr));
             break;
         }
 
@@ -1095,14 +1095,14 @@ async function fetchAllTemplates() {
         const payload = (body && body.statusMessage) || body;
 
         if (!payload || payload.data === undefined) {
-            console.warn("[Devtac SMS] fetchAllTemplates() unexpected response shape:", body);
+            console.warn("[Devtac Viber] fetchAllTemplates() unexpected response shape:", body);
             break;
         }
 
         const page = payload.data || [];
         // DEBUG: confirm the raw shape of a template record — remove once
         // you've verified name/cf_message_content are actually present.
-        console.log("[Devtac SMS] fetchAllTemplates() raw page:", page);
+        console.log("[Devtac Viber] fetchAllTemplates() raw page:", page);
         all = all.concat(page);
 
         if (page.length < limit) break;
@@ -1126,7 +1126,7 @@ async function loadTemplates() {
         }));
         renderTemplateList();
     } catch (err) {
-        console.error("[Devtac SMS] loadTemplates() failed:", err);
+        console.error("[Devtac Viber] loadTemplates() failed:", err);
         tplList.innerHTML = '<div class="tpl-empty">Error loading templates.</div>';
     }
 }
@@ -1179,7 +1179,7 @@ async function loadMessages() {
         const logs = DEBUG_USE_HARDCODED_MESSAGES
             ? getHardcodedMessages()
             : await fetchLogsForTicket();
-        console.log(`[Devtac SMS] loadMessages rendering ${logs.length} ${DEBUG_USE_HARDCODED_MESSAGES ? "HARDCODED" : "fetched"} record(s)`, logs);
+        console.log(`[Devtac Viber] loadMessages rendering ${logs.length} ${DEBUG_USE_HARDCODED_MESSAGES ? "HARDCODED" : "fetched"} record(s)`, logs);
         lastFetchedLogs = logs;
         reconcilePending(logs);
         // Any real fetch (init or refresh) is a "fresh load" — reset the
@@ -1216,14 +1216,14 @@ function startAutoRefresh() {
         // fire even if a manual refresh happens to overlap.
         loadMessages();
     }, AUTO_REFRESH_INTERVAL_MS);
-    console.log("[Devtac SMS] Auto-refresh started (page active)");
+    console.log("[Devtac Viber] Auto-refresh started (page active)");
 }
 
 function stopAutoRefresh() {
     if (!autoRefreshTimer) return;
     clearInterval(autoRefreshTimer);
     autoRefreshTimer = null;
-    console.log("[Devtac SMS] Auto-refresh stopped (page inactive)");
+    console.log("[Devtac Viber] Auto-refresh stopped (page inactive)");
 }
 
 // document.visibilityState covers both tab-switching and window
@@ -1268,7 +1268,7 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
 
     if (!sigmaExecutionDomain || !orgId) {
         console.error(
-            "[Devtac SMS] Missing sigma auth context — cannot send.",
+            "[Devtac Viber] Missing sigma auth context — cannot send.",
             { sigmaExecutionDomain, orgId }
         );
         renderLoadError({ message: "Messaging isn't set up correctly yet (missing sigmaExecutionDomain/orgId). Check console." });
@@ -1357,14 +1357,14 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
     // fires and before the request leaves Zoho's infra. That's intentional
     // (extension.config marks them encrypted), so the real values are not
     // something we can ever log from widget JS.
-    console.log("[Devtac SMS][DEBUG] sigmaExecutionDomain:", sigmaExecutionDomain);
-    console.log("[Devtac SMS][DEBUG] orgId (integ_scope_id):", orgId);
-    console.log("[Devtac SMS][DEBUG] ticketId (record_id):", ticketId);
-    console.log("[Devtac SMS][DEBUG] SIGMA_SEND_FUNCTION_UUID:", SIGMA_SEND_FUNCTION_UUID);
-    console.log("[Devtac SMS][DEBUG] SIGMA_SEND_FUNCTION_VERSION:", SIGMA_SEND_FUNCTION_VERSION);
-    console.log("[Devtac SMS][DEBUG] payload:", payload);
-    console.log("[Devtac SMS][DEBUG] full url:", url);
-    console.log("[Devtac SMS][DEBUG] full requestObj:", JSON.stringify(requestObj, null, 2));
+    console.log("[Devtac Viber][DEBUG] sigmaExecutionDomain:", sigmaExecutionDomain);
+    console.log("[Devtac Viber][DEBUG] orgId (integ_scope_id):", orgId);
+    console.log("[Devtac Viber][DEBUG] ticketId (record_id):", ticketId);
+    console.log("[Devtac Viber][DEBUG] SIGMA_SEND_FUNCTION_UUID:", SIGMA_SEND_FUNCTION_UUID);
+    console.log("[Devtac Viber][DEBUG] SIGMA_SEND_FUNCTION_VERSION:", SIGMA_SEND_FUNCTION_VERSION);
+    console.log("[Devtac Viber][DEBUG] payload:", payload);
+    console.log("[Devtac Viber][DEBUG] full url:", url);
+    console.log("[Devtac Viber][DEBUG] full requestObj:", JSON.stringify(requestObj, null, 2));
 
     try {
         console.log("SEND MESSAGE URL: " + url)
@@ -1372,8 +1372,8 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
         const { value: raw } = await waitForResponseWrite(res, 10000);
 
         // ── DEBUG: dump the raw response before any parsing ──────────────────
-        console.log("[Devtac SMS][DEBUG] raw response (pre-parse):", raw);
-        console.log("[Devtac SMS][DEBUG] raw response type:", typeof raw);
+        console.log("[Devtac Viber][DEBUG] raw response (pre-parse):", raw);
+        console.log("[Devtac Viber][DEBUG] raw response type:", typeof raw);
 
         const body = (() => {
             try {
@@ -1386,14 +1386,14 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
                 return parsed;
             } catch (parseErr) {
                 console.warn(
-                    "[Devtac SMS] sendMessage response wasn't valid JSON (message may still have sent OK). raw:",
+                    "[Devtac Viber] sendMessage response wasn't valid JSON (message may still have sent OK). raw:",
                     raw,
                     parseErr
                 );
                 return null;
             }
         })();
-        console.log("[Devtac SMS] sendMessage result:", body);
+        console.log("[Devtac Viber] sendMessage result:", body);
 
         const failed = body && body.success !== true;
         const errorText = failed
@@ -1406,7 +1406,7 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
             pending.status = failed ? "Failed" : "Sent";
             pending.errorText = errorText;
         }
-        if (failed) console.warn("[Devtac SMS] send reported failure:", body);
+        if (failed) console.warn("[Devtac Viber] send reported failure:", body);
         renderMerged();
 
         // Real fetch reconciles/replaces this pending bubble (new sends) or
@@ -1418,7 +1418,7 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
             await loadMessagesWithRetry();
         }
     } catch (err) {
-        console.error("[Devtac SMS] sendMessage failed:", err, JSON.stringify(err));
+        console.error("[Devtac Viber] sendMessage failed:", err, JSON.stringify(err));
         const errorText = "Failed to send. Tap retry to try again.";
         if (isPersistedRetry) {
             retryStatusOverrides[existingLogId] = { status: "Failed", errorText };
@@ -1436,7 +1436,7 @@ async function sendMessage(existingLogId = "", messageOverride = null, retryClie
                 await loadMessagesWithRetry();
             }
         } catch (reloadErr) {
-            console.error("[Devtac SMS] follow-up loadMessages() also failed:", reloadErr);
+            console.error("[Devtac Viber] follow-up loadMessages() also failed:", reloadErr);
         }
     } finally {
         sendBtn.disabled = msgInput.value.trim().length === 0;
@@ -1495,7 +1495,7 @@ messagesArea.addEventListener("click", (e) => {
 // ── Init ──────────────────────────────────────────────────────────────────────
 ZOHODESK.extension.onload().then((App) => {
     sigmaExecutionDomain = App && App.meta && App.meta.sigmaExecutionDomain;
-    console.log("[Devtac SMS] sigmaExecutionDomain:", sigmaExecutionDomain);
+    console.log("[Devtac Viber] sigmaExecutionDomain:", sigmaExecutionDomain);
 
     return ZOHODESK.get("extension.config").then((configRes) => {
         // extension.config returns an ARRAY of {name, value, defaultValue}
@@ -1509,7 +1509,7 @@ ZOHODESK.extension.onload().then((App) => {
 
         orgId = cfg.orgId;
         messagesPerLoad = clampMessagesPerLoad(cfg.messagesPerLoad);
-        console.log("[Devtac SMS] messagesPerLoad config:", cfg.messagesPerLoad, "-> resolved:", messagesPerLoad);
+        console.log("[Devtac Viber] messagesPerLoad config:", cfg.messagesPerLoad, "-> resolved:", messagesPerLoad);
 
         // Kick off the lookup-fields fetch now, in parallel with the ticket
         // fetch below — it only needs deskDomain (already set), not any
