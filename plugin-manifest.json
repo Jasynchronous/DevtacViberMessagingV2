@@ -230,7 +230,7 @@
     "modules": {
       "widgets": [
         {
-          "name": "Devtac SMS Messaging",
+          "name": "Devtac Viber Messaging V2",
           "icon": "/app/img/icon.png",
           "logo": "/app/img/logo.png",
           "location": "desk.ticket.detail.subtab",

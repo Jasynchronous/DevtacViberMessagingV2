@@ -244,7 +244,7 @@ body {
 }
 
 .bubble.in {
-    background: #e4eef6;
+    background: #ece9fb;
     color: var(--text);
     border-bottom-left-radius: 3px;
 }
@@ -664,7 +664,7 @@ body {
 }
 
 .tpl-highlight {
-    background: rgba(18, 155, 209, .18);
+    background: rgba(115, 96, 242, .18);
     border-radius: 2px;
     font-weight: 700;
 }
@@ -768,7 +768,7 @@ textarea#msgInput:disabled {
 .send-btn:hover:not(:disabled) {
     opacity: .88;
     transform: translateY(-1px);
-    box-shadow: 0 5px 18px rgba(63, 112, 181, .35);
+    box-shadow: 0 5px 18px rgba(115, 96, 242, .35);
 }
 
 .send-btn:active:not(:disabled) {

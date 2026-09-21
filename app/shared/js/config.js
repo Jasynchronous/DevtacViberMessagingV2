@@ -17,14 +17,14 @@ export const CONFIG = {
     // ── Identity ───────────────────────────────────────────────────────────────
     // The Zoho Sigma extension namespace. Change this when duplicating for
     // another channel.
-    NAMESPACE: "devtacsmsmessaging",
+    NAMESPACE: "devtacvibermessaging",
 
     // The messaging channel. Used as a display label and as the "channel"
     // parameter sent to the backend send function.
-    CHANNEL: "SMS",
+    CHANNEL: "Viber",
 
     // Display name shown in widget headers.
-    WIDGET_NAME: "Devtac SMS Messaging",
+    WIDGET_NAME: "Devtac Viber Messaging",
 };
 
 // ── Shorthand helper ──────────────────────────────────────────────────────────

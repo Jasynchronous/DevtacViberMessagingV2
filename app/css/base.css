@@ -2,6 +2,7 @@
    base.css  –  Global
    Design tokens + shared primitives.
    Imported by every page in the Desk widget.
+   THEME: Viber (Devtac logo keeps its original blue gradient)
    ============================================================ */
 
 /* ── Reset ── */
@@ -13,31 +14,35 @@
 
 /* ── Design tokens ── */
 :root {
-    --blue-lt:  #6bbee6;
-    --blue-mid: #3f70b5;
-    --blue-dk:  #129bd1;
+    /* Viber palette (token names kept for compatibility) */
+    --blue-lt:  #9f92f7;
+    --blue-mid: #665cac;
+    --blue-dk:  #7360f2;
 
     --accent:      var(--blue-dk);
-    --accent-lt:   rgba(18, 155, 209, .12);
-    --accent-glow: rgba(18, 155, 209, .28);
+    --accent-lt:   rgba(115, 96, 242, .12);
+    --accent-glow: rgba(115, 96, 242, .28);
     --grad:        linear-gradient(135deg, var(--blue-lt) 0%, var(--blue-mid) 50%, var(--blue-dk) 100%);
 
-    --bg:        #f0f4f9;
-    --surface:   #ffffff;
-    --surface-2: #f7fafd;
-    --border:    #d5e3f0;
-    --border-hl: rgba(18, 155, 209, .35);
+    /* Devtac logo gradient – ORIGINAL blue, intentionally not themed */
+    --devtac-grad: linear-gradient(135deg, #6bbee6 0%, #3f70b5 50%, #129bd1 100%);
 
-    --text:     #0f1e30;
-    --muted:    #6b849e;
-    --muted-lt: #98b0c4;
+    --bg:        #f5f3fc;
+    --surface:   #ffffff;
+    --surface-2: #f9f8fe;
+    --border:    #ddd8f3;
+    --border-hl: rgba(115, 96, 242, .35);
+
+    --text:     #1e1836;
+    --muted:    #7a7594;
+    --muted-lt: #a9a4c4;
 
     --success: #1ec86a;
-    --tag-bg:  rgba(18, 155, 209, .08);
-    --tag-txt: #1282ab;
+    --tag-bg:  rgba(115, 96, 242, .08);
+    --tag-txt: #5a4bd1;
 
-    --shadow-sm: 0 1px 4px rgba(63, 112, 181, .10);
-    --shadow-md: 0 4px 16px rgba(63, 112, 181, .14);
+    --shadow-sm: 0 1px 4px rgba(115, 96, 242, .10);
+    --shadow-md: 0 4px 16px rgba(115, 96, 242, .14);
 }
 
 /* ── Base body ── */
@@ -118,7 +123,7 @@ body {
     align-items: center;
     gap: 5px;
     background: var(--tag-bg);
-    border: 1px solid rgba(18, 155, 209, .18);
+    border: 1px solid rgba(115, 96, 242, .22);
     border-radius: 20px;
     padding: 3px 9px;
     font-size: 10px;
@@ -141,7 +146,7 @@ body {
     align-items: center;
     gap: 5px;
     background: var(--tag-bg);
-    border: 1px solid rgba(18, 155, 209, .18);
+    border: 1px solid rgba(115, 96, 242, .22);
     border-radius: 20px;
     padding: 3px 9px;
     font-size: 10px;
@@ -184,8 +189,9 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+/* Devtac logo text: original blue gradient, NOT themed */
 .devtac-badge .dt {
-    background: var(--grad);
+    background: var(--devtac-grad);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
