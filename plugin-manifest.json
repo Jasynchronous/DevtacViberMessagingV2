@@ -1,0 +1,249 @@
+{
+    "connectors": [
+      {
+        "connectionLinkName": "desk_marketplace_connection",
+        "userAccess": true,
+        "sharedBy": "859202529",
+        "scope": [
+          "Desk.settings.ALL",
+          "Desk.basic.ALL",
+          "Desk.search.READ",
+          "Desk.tickets.ALL",
+          "Desk.contacts.ALL",
+          "Desk.tasks.ALL",
+          "Desk.extensions.ALL",
+          "Desk.zia.ALL",
+          "Desk.articles.ALL",
+          "Desk.calls.ALL",
+          "Desk.events.ALL",
+          "Desk.community.ALL",
+          "Desk.integrations.ALL",
+          "Desk.custommodule.ALL",
+          "Desk.modules.ALL",
+          "Desk.agents.ALL",
+          "Desk.accounts.ALL",
+          "Desk.departments.ALL",
+          "Desk.webhooks.ALL",
+          "Desk.organization.ALL",
+          "Desk.automations.ALL",
+          "Desk.templates.ALL",
+          "Desk.extensions.data.ALL",
+          "Desk.extensions.settings.ALL",
+          "Desk.contracts.ALL",
+          "Desk.fields.ALL",
+          "Desk.permissions.ALL",
+          "Desk.layouts.ALL",
+          "Desk.teams.ALL",
+          "Desk.channels.helpcenter.ALL",
+          "Desk.channels.email.ALL"
+        ],
+        "connectionName": "desk_marketplace_connection",
+        "serviceName": "zoho_desk",
+        "isUserDefinedService": false
+      }
+    ],
+    "zohoAuthorisation": {},
+    "whiteListedDomains": [
+      "https://webhook.site",
+      "https://desk.zoho.com",
+      "https://263ff61b-bdc0-4d13-8926-8e86c0a9ee93.sigmaexecution.com",
+      "https://sigmaexecution.com",
+      "https://css.zoho.com",
+      "https://css.zoho.eu",
+      "https://css.zoho.in",
+      "https://css.zoho.com.au",
+      "https://css.zoho.jp",
+      "https://css.zoho.com.cn",
+      "https://devtac-messaging-907330555.development.catalystserverless.com",
+      "https://catalystserverless.com"
+    ],
+    "moduleSupport": true,
+    "service": "DESK",
+    "cspDomains": {
+      "connect-src": []
+    },
+    "storage": true,
+    "locale": [
+      "en"
+    ],
+    "type": "personal",
+    "config": [
+      {
+        "displayName": "License Key",
+        "name": "licenseKey",
+        "description": "Enter the license key provided by Devtac.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": true
+      },
+      {
+        "displayName": "Inbound Messages with No Matching Ticket",
+        "defaultValue": "Create a new ticket",
+        "name": "inboundNoMatchAction",
+        "options": [
+          "Create a new ticket",
+          "Assign to latest ticket related to the phone number"
+        ],
+        "description": "Choose what happens when an inbound SMS is received and no ticket number is found in the message.",
+        "secure": false,
+        "type": "radio",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": true
+      },
+      {
+        "default": "20",
+        "displayName": "Messages Per Load",
+        "name": "messagesPerLoad",
+        "description": "Number of messages loaded each time \"Load More\" is tapped in the chat widget. Min: 5 · Max: 100",
+        "secure": false,
+        "type": "number",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": true
+      },
+      {
+        "default": true,
+        "displayName": "Enable Pop-up Reminder",
+        "name": "enablePopupReminder",
+        "description": "When enabled, a pop-up reminder will be triggered whenever a new inbound message is received in the chat widget.",
+        "secure": false,
+        "type": "checkbox",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": true
+      },
+      {
+        "default": "2",
+        "displayName": "Pop-up Reminder Interval (minutes)",
+        "name": "popupReminderIntervalInMinutes",
+        "description": "Sets the minimum minutes since the last inbound message from the same sender before showing another pop-up. For example, 5 shows a pop-up only after 5+ minutes. Set to 0 to show a pop-up for every inbound message.",
+        "secure": false,
+        "type": "number",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": true
+      },
+      {
+        "displayName": "Client API Key",
+        "name": "clientApiKey",
+        "description": "API key for this installation.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "Encoded Client API Key",
+        "name": "encodedClientApiKey",
+        "description": "Encrypted API key for this installation (encapiKey).",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "App Install ID",
+        "name": "appInstallId",
+        "description": "Sigma installation ID for this org.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "Integ Scope ID",
+        "name": "integScopeId",
+        "description": "Org ID from Sigma (integ_scope_id).",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "Org ID",
+        "name": "orgId",
+        "description": "Zoho Desk organization ID.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "Org Name",
+        "name": "orgName",
+        "description": "Zoho Desk organization name.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "Org Email",
+        "name": "orgEmail",
+        "description": "Zoho Desk organization primary email.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "SMS Trial Status",
+        "name": "smsTrialStatus",
+        "description": "Trial status for the SMS channel.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "SMS Credit Balance",
+        "name": "smsCreditBalance",
+        "description": "Current SMS credit balance.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      },
+      {
+        "displayName": "SMS Is Message Threshold Reached",
+        "name": "smsIsMessageThresholdReached",
+        "description": "Whether the SMS message threshold has been reached for this installation.",
+        "secure": false,
+        "type": "text",
+        "authType": "org",
+        "mandatory": false,
+        "userdefined": false
+      }
+    ],
+    "modules": {
+      "widgets": [
+        {
+          "name": "Devtac SMS Messaging",
+          "icon": "/app/img/icon.png",
+          "logo": "/app/img/logo.png",
+          "location": "desk.ticket.detail.subtab",
+          "url": "/app/chat/index.html"
+        },
+        {
+          "name": "Reply via SMS Devtac",
+          "icon": "/app/img/icon.png",
+          "logo": "/app/img/logo.png",
+          "location": "desk.ticket.detail.moreaction",
+          "url": "/app/chat/index.html"
+        }
+      ],
+      "events": []
+    }
+  }

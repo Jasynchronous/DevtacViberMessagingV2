@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title id="pageTitle">Devtac Messaging – Notification</title>
+    <script src="https://desk.zoho.com/portal/api/embeddedapp"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="css/notification.css" />
+</head>
+<body>
+
+    <!-- ── Header ── -->
+    <div class="header">
+        <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="white">
+                <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+            </svg>
+        </div>
+        <div class="header-text">
+            <h1 id="widgetTitle">Devtac SMS</h1>
+        </div>
+        <div class="header-right">
+            <div class="channel-pill">
+                <div class="channel-pill-dot"></div>
+                SMS
+            </div>
+            <div class="devtac-badge">by <span class="dt">Devtac</span></div>
+        </div>
+    </div>
+
+    <!-- ── TODO: notification UI ── -->
+
+    <script type="module" src="js/notification-main.js"></script>
+    <script type="module">
+        import { CONFIG } from "../shared/js/config.js";
+        document.getElementById("widgetTitle").textContent = CONFIG.WIDGET_NAME;
+        document.getElementById("pageTitle").textContent   = CONFIG.WIDGET_NAME + " – Notification";
+    </script>
+
+</body>
+</html>
