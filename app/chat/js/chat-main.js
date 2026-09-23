@@ -20,7 +20,7 @@ const sendBtn = document.getElementById("sendBtn");
 const recipientName = document.getElementById("recipientName");
 const recipientNum = document.getElementById("recipientNumber");
 const recipientAv = document.getElementById("recipientAvatar");
-const smsCreditBadge = document.getElementById("smsCreditBadge");
+const viberCreditBadge = document.getElementById("viberCreditBadge");
 const initOverlay = document.getElementById("initOverlay");
 
 function hideInitOverlay() {
@@ -47,8 +47,9 @@ textareaWrap.appendChild(tplResolvingOverlay);
 
 // ── Sigma "sendDevtacMessage" function identifiers (Functions tab, Sigma IDE) ──
 // These two are fixed — they identify the function itself, not the install.
-const SIGMA_SEND_FUNCTION_UUID = "2b9ea7e0-32b6-4308-8774-7f80914a86cd";
-const SIGMA_SEND_FUNCTION_VERSION = "94";
+const SIGMA_SEND_FUNCTION_UUID = "5ea99673-eb4e-464c-9fa7-72b3f4b3607b";
+const SIGMA_SEND_FUNCTION_VERSION = "1";
+
 
 
 // ── Sigma "Process Devtac Message Templates Dynamic Values" function identifiers ──
@@ -1529,9 +1530,9 @@ ZOHODESK.extension.onload().then((App) => {
 
             renderRecipientBar(ticket);
 
-            if (cfg.smsCreditBalance) {
-                smsCreditBadge.style.display = "flex";
-                smsCreditBadge.querySelector(".credit-value").textContent = cfg.smsCreditBalance;
+            if (cfg.viberCreditBalance) {
+                viberCreditBadge.style.display = "flex";
+                viberCreditBadge.querySelector(".credit-value").textContent = cfg.viberCreditBalance;
             }
 
             loadTemplates();

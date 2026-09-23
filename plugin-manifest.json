@@ -46,7 +46,6 @@
     "whiteListedDomains": [
       "https://webhook.site",
       "https://desk.zoho.com",
-      "https://263ff61b-bdc0-4d13-8926-8e86c0a9ee93.sigmaexecution.com",
       "https://sigmaexecution.com",
       "https://css.zoho.com",
       "https://css.zoho.eu",
@@ -54,8 +53,9 @@
       "https://css.zoho.com.au",
       "https://css.zoho.jp",
       "https://css.zoho.com.cn",
-      "https://devtac-messaging-907330555.development.catalystserverless.com",
-      "https://catalystserverless.com"
+      "https://catalystserverless.com",
+      "https://15489d6a-0077-4010-913e-7ceda0573bfb.sigmaexecution.com",
+      "https://devtac-messaging-884740575.development.catalystserverless.com"
     ],
     "moduleSupport": true,
     "service": "DESK",
@@ -86,7 +86,7 @@
           "Create a new ticket",
           "Assign to latest ticket related to the phone number"
         ],
-        "description": "Choose what happens when an inbound SMS is received and no ticket number is found in the message.",
+        "description": "Choose what happens when an inbound Viber is received and no ticket number is found in the message.",
         "secure": false,
         "type": "radio",
         "authType": "org",
@@ -197,9 +197,9 @@
         "userdefined": false
       },
       {
-        "displayName": "SMS Trial Status",
-        "name": "smsTrialStatus",
-        "description": "Trial status for the SMS channel.",
+        "displayName": "Viber Trial Status",
+        "name": "viberTrialStatus",
+        "description": "Trial status for the Viber channel.",
         "secure": false,
         "type": "text",
         "authType": "org",
@@ -207,9 +207,9 @@
         "userdefined": false
       },
       {
-        "displayName": "SMS Credit Balance",
-        "name": "smsCreditBalance",
-        "description": "Current SMS credit balance.",
+        "displayName": "Viber Credit Balance",
+        "name": "viberCreditBalance",
+        "description": "Current Viber credit balance.",
         "secure": false,
         "type": "text",
         "authType": "org",
@@ -217,9 +217,9 @@
         "userdefined": false
       },
       {
-        "displayName": "SMS Is Message Threshold Reached",
-        "name": "smsIsMessageThresholdReached",
-        "description": "Whether the SMS message threshold has been reached for this installation.",
+        "displayName": "Viber Is Message Threshold Reached",
+        "name": "viberIsMessageThresholdReached",
+        "description": "Whether the Viber message threshold has been reached for this installation.",
         "secure": false,
         "type": "text",
         "authType": "org",
@@ -237,7 +237,7 @@
           "url": "/app/chat/index.html"
         },
         {
-          "name": "Reply via SMS Devtac",
+          "name": "Reply via Viber Devtac",
           "icon": "/app/img/icon.png",
           "logo": "/app/img/logo.png",
           "location": "desk.ticket.detail.moreaction",
