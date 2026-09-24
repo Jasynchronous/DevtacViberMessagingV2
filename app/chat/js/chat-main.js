@@ -48,7 +48,7 @@ textareaWrap.appendChild(tplResolvingOverlay);
 // ── Sigma "sendDevtacMessage" function identifiers (Functions tab, Sigma IDE) ──
 // These two are fixed — they identify the function itself, not the install.
 const SIGMA_SEND_FUNCTION_UUID = "5ea99673-eb4e-464c-9fa7-72b3f4b3607b";
-const SIGMA_SEND_FUNCTION_VERSION = "1";
+const SIGMA_SEND_FUNCTION_VERSION = "3";
 
 
 
